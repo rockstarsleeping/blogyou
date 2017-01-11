@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title_block %}Articles{% endblock %}</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <!-- Theme CSS -->
+    <link href="{% static "css/grayscale.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <style>
+      .article-list:hover{
+        transform: scale(1.05, 1.05);
+        transition: all .5s ease-in-out;
+      }
+    </style>
+
+  </head>
+  <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="{% url "index" %}">
+                    Blog You
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    {% if user.is_authenticated %}
+                      <li><a href="#">Hi, {{ user.username }}</a></li>
+                    {% endif %}
+                    <li>
+                        <a class="page-scroll" href="{% url "index" %}">Home</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="{% url "articles" %}">Articles</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'auth_logout' %}?next=/blog">Logout</a>
+                    </li>
+                    {% else %}
+                      <li><a href="{% url 'auth_login' %}">Login</a></li>
+                      <li><a href="{% url 'registration_register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+    {% if articles %}
+    <section class="container content-section">
+    <h1 class="lower-case">Read your articles here.</h1>
+    <hr>
+    {% for article in articles %}
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-3 col-md-4">
+          <a href="{% url "show_article" article.slug %}"><img src="/media/{{ article.article_image.name}}" alt="{{ article.id }}" class="article-list img-thumbnail"></a>
+        </div>
+        <div class="col-sm-9 col-md-8">
+          <a href="{% url "show_article" article.slug %}"><strong>{{ article.title }}</strong></a>
+          <p>{{ article.description }}</p>
+        </div>
+      </div>
+      <hr>
+    </div>
+        {% endfor %}
+      {% else %}
+        <h1><strong>No articles available yet.</strong></h1>
+    </section>
+    {% endif %}
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="{% static "js/grayscale.min.js" %}"></script>
+  </body>
+</html>

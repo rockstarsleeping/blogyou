@@ -1,0 +1,10 @@
+def comment_posted(request):
+    if request.GET['c']:
+        comment_id = request.GET['c']
+        comment = Comment.objects.get(pk=comment_id )
+        article = Article.objects.get(id=comment.object_pk)
+
+        if article:
+            return HttpResponseRedirect(article.get_absolute_url())
+
+    return HttpResponseRedirect('/')

@@ -1,0 +1,37 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}Login{% endblock %}
+
+{% block body_block %}
+    <section class="container content-section">
+      <form  action="." method="post">
+        {% csrf_token %}
+        {{ form.errors }}
+        <div class="row">
+          <div class="col-sm-1 cntr">
+            <label for="uname" class="login">Username</label>
+          </div>
+          <div class="col-sm-11 text">
+            {{ form.username }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1">
+            <label for="password" class="login">Password</label>
+          </div>
+          <div class="col-sm-11 text">
+            {{ form.password }}
+            {{ form.password.errors }}
+          </div>
+        </div>
+        <input type="submit" value="Log In" class="text">
+        <input type="hidden" name="next" value="{{ next }}">
+      </form>
+      <hr>
+      <p>
+        Not a member?
+        <a href="{% url 'registration_register' %}">Register</a>
+      </p>
+  </section>
+{% endblock %}
