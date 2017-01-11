@@ -1,3 +1,3 @@
 # blogyou
 
-<a href="blogyou.pythonanywhere.com/blog"><strong>Preview the wesite</strong></a>
+<a href="http://www.blogyou.pythonanywhere.com/blog"><strong>Preview the wesite</strong></a>
